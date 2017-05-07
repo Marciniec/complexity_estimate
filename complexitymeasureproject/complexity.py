@@ -6,7 +6,7 @@ import numpy as np
 import time
 from mpmath import cbrt
 import logging
-import custom_exeptions
+import complexitymeasureproject.custom_exeptions
 
 
 def average(fun):
@@ -36,7 +36,8 @@ class Complexity:
             logging.debug("Creating loaded class object")
         except TypeError:
             logging.info("TypeError occurred probably due to wrong class name")
-            raise custom_exeptions.WrongClassException("Class is invalid next time please input valid class")
+            raise complexitymeasureproject.custom_exeptions.WrongClassException("Class is invalid next time please "
+                                                                                "input valid class")
         logging.debug("Initialising object variables")
         self.x = []
         self.y = []
@@ -149,7 +150,8 @@ class Complexity:
                 try:
                     two_to_n = pow(2, (y - coefficients[-1]) / (coefficients[0]))
                 except OverflowError:
-                    raise custom_exeptions.OverFlow("Overflow occurred during computing reverse function to logn")
+                    raise complexitymeasureproject.custom_exeptions.OverFlow("Overflow occurred during computing "
+                                                                             "reverse function to logn")
                 return two_to_n
 
             print("Inverse Function: 2^((y-{0})/{1}) ".format(coefficients[-1], coefficients[0]))

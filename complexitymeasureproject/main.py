@@ -1,10 +1,9 @@
 import argparse
-import custom_exeptions
-from pydoc import locate
+import complexitymeasureproject.custom_exeptions
 
 import sys
 
-from complexity import Complexity
+from complexitymeasureproject.complexity import Complexity
 
 parser = argparse.ArgumentParser()
 parser.add_argument('cl', help="your class you want to load [Package].[Module].[Class]")
@@ -18,7 +17,7 @@ try:
         x = Complexity(arguments.cl, arguments.t)
     else:
         x = Complexity(arguments.cl)
-except custom_exeptions.WrongClassException as e:
+except complexitymeasureproject.custom_exeptions.WrongClassException as e:
     print(e)
     sys.exit()
 x.measure_time()
@@ -37,7 +36,7 @@ if arguments.f:
 if arguments.f:
     try:
         w = inverse(arguments.f)
-    except custom_exeptions.OverFlow as e:
+    except complexitymeasureproject.custom_exeptions.OverFlow as e:
         print(e)
         sys.exit()
     except ValueError as f:
