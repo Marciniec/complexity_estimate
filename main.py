@@ -8,6 +8,10 @@ print(arguments.cl)
 x = Complexity(arguments.cl)
 x.measure_time()
 x.find_closest_function()
+funkcje = x.predicting_time()
+odwrotne =x.reversed_functions()
+print(funkcje(1000))
+print(odwrotne(1))
 
 
 # def my_import(name):
