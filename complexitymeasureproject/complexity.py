@@ -11,7 +11,8 @@ import complexitymeasureproject.custom_exeptions
 
 def average(fun):
     def new(self, x, degree):
-        logging.debug("Computing average absolute difference between measured points and theoretical fitted function")
+        logging.debug("Computing average absolute difference between measured"
+                      " points and theoretical fitted function")
         return np.average(np.abs(fun(self, x, degree)))
 
     return new
@@ -19,7 +20,8 @@ def average(fun):
 
 def print_complexity(func):
     def measure(self):
-        print('Approximated complexity of your function is {0}'.format(func(self)))
+        print('Approximated complexity of your function is {0}'
+              .format(func(self)))
 
     return measure
 
@@ -35,9 +37,11 @@ class Complexity:
             self.object = my_class()
             logging.debug("Creating loaded class object")
         except TypeError:
-            logging.info("TypeError occurred probably due to wrong class name")
-            raise complexitymeasureproject.custom_exeptions.WrongClassException("Class is invalid next time please "
-                                                                                "input valid class")
+            logging.info("TypeError occurred probably due to wrong"
+                         " class name")
+            raise complexitymeasureproject.custom_exeptions. \
+                WrongClassException("Class is invalid next time please "
+                                    "input valid class")
         logging.debug("Initialising object variables")
         self.x = []
         self.y = []
@@ -67,22 +71,31 @@ class Complexity:
             self.x.append(N)
             self.y.append(t)
             self.object.cleaning()
-        logging.debug("After measurement self.x: " + str(self.x) + " self.y: " + str(self.y))
+        logging.debug("After measurement self.x: " + str(self.x) + " self.y: "
+                      + str(self.y))
 
     @print_complexity
     def find_closest_function(self):
-        self.complexities = dict([(self.polynomial_with_coefficients(self.x, 0), 'O(1)'),
-                                  (self.polynomial_with_coefficients(self.x, 1), 'O(n)'),
-                                  (self.polynomial_with_coefficients(self.x, 2), 'O(n^2)'),
-                                  (self.polynomial_with_coefficients(self.x, 3), 'O(n^3)'),
-                                  (self.polynomial_with_coefficients(np.log2(self.x), 1), 'O(logn)'),
-                                  (self.polynomial_with_coefficients(self.x * np.log2(self.x), 1), 'O(nlogn)'),
-                                  (self.polynomial_with_coefficients(np.sqrt(self.x), 1), 'O(sqrt(n))')])
-        closest = min(list(self.complexities.keys()))
-        logging.debug("Getting smallest average in difference: " + str(closest))
+        complexities = dict([(self.polynomial_with_coefficients(self.x, 0),
+                              'O(1)'),
+                             (self.polynomial_with_coefficients(self.x, 1),
+                              'O(n)'),
+                             (self.polynomial_with_coefficients(self.x, 2),
+                              'O(n^2)'),
+                             (self.polynomial_with_coefficients(self.x, 3),
+                              'O(n^3)'),
+                             (self.polynomial_with_coefficients(
+                                 np.log2(self.x), 1), 'O(logn)'),
+                             (self.polynomial_with_coefficients(
+                                 self.x * np.log2(self.x), 1), 'O(nlogn)'),
+                             (self.polynomial_with_coefficients(
+                                 np.sqrt(self.x), 1), 'O(sqrt(n))')])
+        closest = min(list(complexities.keys()))
+        logging.debug("Getting smallest average in difference: " +
+                      str(closest))
         logging.debug("Returning complexity")
-        self.complexity = self.complexities.get(closest)
-        return self.complexities.get(closest)
+        self.complexity = complexities.get(closest)
+        return complexities.get(closest)
 
     def predicting_time(self):
         logging.debug("Initializing empty list with coefficients")
@@ -92,24 +105,34 @@ class Complexity:
             print("Function: {0} ".format(coefficients[0]))
         elif self.complexity == 'O(n)':
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 1))
-            print("Function: {0}x + {1} ".format(coefficients[0], coefficients[-1]))
+            print("Function: {0}x + {1} ".format(coefficients[0],
+                                                 coefficients[-1]))
         elif self.complexity == 'O(n^2)':
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 2))
-            print("Function: {0}x^2 +{1} ".format(coefficients[0], coefficients[-1]))
+            print("Function: {0}x^2 +{1} ".format(coefficients[0],
+                                                  coefficients[-1]))
         elif self.complexity == 'O(n^3)':
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 3))
-            print("Function: {0}x^3  + {1} ".format(coefficients[0], coefficients[-1]))
+            print("Function: {0}x^3  + {1} ".format(coefficients[0],
+                                                    coefficients[-1]))
         elif self.complexity == 'O(logn)':
-            coefficients = np.asanyarray(np.polyfit(np.log2(self.x), self.y, 1))
-            print("Function: {0}logx + {1} ".format(coefficients[0], coefficients[-1]))
+            coefficients = np.asanyarray(np.polyfit(np.log2(self.x),
+                                                    self.y, 1))
+            print("Function: {0}logx + {1} ".format(coefficients[0],
+                                                    coefficients[-1]))
         elif self.complexity == 'O(nlogn)':
-            coefficients = np.asanyarray(np.polyfit(self.x * np.log2(self.x), self.y, 1))
-            print("Function: {0}xlogx + {1} ".format(coefficients[0], coefficients[-1]))
+            coefficients = np.asanyarray(np.polyfit(self.x * np.log2(self.x),
+                                                    self.y, 1))
+            print("Function: {0}xlogx + {1} ".format(coefficients[0],
+                                                     coefficients[-1]))
         elif self.complexity == 'O(sqrt(n))':
-            coefficients = np.asanyarray(np.polyfit(np.sqrt(self.x), self.y, 1))
-            print("Function: {0}sqrtx + {1} ".format(coefficients[0], coefficients[-1]))
+            coefficients = np.asanyarray(np.polyfit(np.sqrt(self.x),
+                                                    self.y, 1))
+            print("Function: {0}sqrtx + {1} ".format(coefficients[0],
+                                                     coefficients[-1]))
         coefficients[1:-1] = 0
-        logging.debug("Computed accurate coefficients to our function: " + str(coefficients))
+        logging.debug("Computed accurate coefficients to our function: "
+                      + str(coefficients))
         logging.debug("Returning function")
         return np.poly1d(coefficients)
 
@@ -119,7 +142,8 @@ class Complexity:
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 0))
 
             def inverse_function(y):
-                return coefficients[0]*y
+                return coefficients[0] * y
+
             print("Inverse Function: {0} ".format(coefficients[0]))
 
         elif self.complexity == 'O(n)':
@@ -128,35 +152,43 @@ class Complexity:
             def inverse_function(y):
                 return (y - coefficients[-1]) / coefficients[0]
 
-            print("Inverse Function: (y -{0}) / {1} ".format(coefficients[-1], coefficients[0]))
+            print("Inverse Function: (y -{0}) / {1} ".format(coefficients[-1],
+                                                             coefficients[0]))
         elif self.complexity == 'O(n^2)':
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 2))
 
             def inverse_function(y):
                 return sqrt((y - coefficients[-1]) / coefficients[0])
 
-            print("Inverse Function: sqrt((y-{0})/{1}) ".format(coefficients[-1], coefficients[0]))
+            print("Inverse Function: sqrt((y-{0})/{1}) ".format(
+                coefficients[-1], coefficients[0]))
         elif self.complexity == 'O(n^3)':
             coefficients = np.asanyarray(np.polyfit(self.x, self.y, 3))
 
             def inverse_function(y):
                 return cbrt((y - coefficients[-1]) / coefficients[0])
 
-            print("Inverse Function: cbrt((i-{0})/{1}) ".format(coefficients[-1], coefficients[0]))
+            print("Inverse Function: cbrt((i-{0})/{1}) ".format(
+                coefficients[-1], coefficients[0]))
         elif self.complexity == 'O(logn)':
-            coefficients = np.asanyarray(np.polyfit(np.log2(self.x), self.y, 1))
+            coefficients = np.asanyarray(np.polyfit(np.log2(self.x),
+                                                    self.y, 1))
 
             def inverse_function(y):
                 try:
-                    two_to_n = pow(2, (y - coefficients[-1]) / (coefficients[0]))
+                    two_to_n = pow(2, (y - coefficients[-1]) /
+                                   (coefficients[0]))
                 except OverflowError:
-                    raise complexitymeasureproject.custom_exeptions.OverFlow("Overflow occurred during computing "
-                                                                             "reverse function to logn")
+                    raise complexitymeasureproject.custom_exeptions. \
+                        OverFlow("Overflow occurred during computing "
+                                 "reverse function to logn")
                 return two_to_n
 
-            print("Inverse Function: 2^((y-{0})/{1}) ".format(coefficients[-1], coefficients[0]))
+            print("Inverse Function: 2^((y-{0})/{1}) ".format(
+                coefficients[-1], coefficients[0]))
         elif self.complexity == 'O(nlogn)':
-            coefficients = np.asanyarray(np.polyfit(self.x * np.log2(self.x), self.y, 1))
+            coefficients = np.asanyarray(np.polyfit(self.x * np.log2(self.x),
+                                                    self.y, 1))
 
             def inverse_function(y):
                 n = (y - coefficients[-1]) / coefficients[0]
@@ -166,10 +198,13 @@ class Complexity:
             print("There's no inverse function to nlogn")
         elif self.complexity == 'O(sqrt(n))':
             def inverse_function(y):
-                return ((y - coefficients[-1]) / coefficients[0]) * ((y - coefficients[-1]) / coefficients[0])
+                return ((y - coefficients[-1]) / coefficients[0]) *\
+                       ((y - coefficients[-1]) / coefficients[0])
 
-            coefficients = np.asanyarray(np.polyfit(np.sqrt(self.x), self.y, 1))
-            print("Inverse Function: ((y - {0})/ {0})^2  ".format(coefficients[0], coefficients[1]))
+            coefficients = np.asanyarray(np.polyfit(np.sqrt(self.x),
+                                                    self.y, 1))
+            print("Inverse Function: ((y - {0})/ {0})^2  ".format
+                  (coefficients[0], coefficients[1]))
 
         logging.debug("Computed approximate inverse function and returning it")
         return inverse_function
