@@ -1,6 +1,6 @@
 In order to run program you need to install package using:
 ```
-pip install git+https://github.com/SashaFierceFlawless/Complexity_Estimate/
+pip install git+https://github.com/Marciniec/complexity_estimate
 ```
 In order to determine complexity of your program you need make new class that inherits from _Basic_ class and implement methods:
  * \__init__   -declare all variables you'll need in your program
